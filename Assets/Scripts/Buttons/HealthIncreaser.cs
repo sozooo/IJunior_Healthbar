@@ -1,26 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class HealthCreaser : MonoBehaviour
+public class HealthIncreaser : MonoBehaviour
 {
-    [SerializeField] private float _creaseAmount;
+    [SerializeField] private float _increaseAmount;
+    [SerializeField] private Health _health;
 
     private Button _button;
-    private Health _health;
 
     private void Awake()
     {
         _button = GetComponent<Button>();
-        _health = FindObjectOfType<Health>();
-
         _button.onClick.AddListener(CreaseHealth);
     }
 
     private void CreaseHealth()
     {
-        _health.ChangeHealth(_creaseAmount);
+        _health.Heal(_increaseAmount);
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -11,29 +9,21 @@ public class Health : MonoBehaviour
 
     private float _currentHealth;
 
+    public float MaxHealth => _maxHealth;
+    public float CurrentHealth => _currentHealth;
+
     private void Start()
     {
         _currentHealth = _maxHealth;
-        DisplayHealth();
     }
 
-
-    private void DisplayHealth()
+    public void Heal(float healAmount)
     {
-        _healthbar.Display(_currentHealth, _maxHealth);
-        _smoothHealthbar.Display(_currentHealth, _maxHealth);
-        _healthIndicator.Display(_currentHealth, _maxHealth);
+        _currentHealth = Mathf.Clamp(_currentHealth + healAmount, 0f, _maxHealth);
     }
 
-    public void ChangeHealth(float healthChanger)
+    public void TakeDamage(float damage)
     {
-        _currentHealth += healthChanger;
-
-        if(_currentHealth > _maxHealth)
-            _currentHealth = _maxHealth;
-        else if(_currentHealth < 0f)
-            _currentHealth = 0f;
-
-        DisplayHealth();
+        _currentHealth = Mathf.Clamp(_currentHealth - damage, 0f, _maxHealth);
     }
 }
