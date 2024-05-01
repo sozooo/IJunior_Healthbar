@@ -9,7 +9,6 @@ public class Health : MonoBehaviour
 
     private float _currentHealth;
 
-    public float MaxHealth => _maxHealth;
     public float CurrentHealth
     {
         get
