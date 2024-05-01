@@ -16,7 +16,7 @@ public class SmoothHealthbar : MonoBehaviour
 
     public void Display(float currentHealth, float maxHealth)
     {
-        StopAllCoroutines();
+        StopCoroutine(nameof(SmoothDisplaing));
         StartCoroutine(SmoothDisplaing(currentHealth, maxHealth));
     }
 
