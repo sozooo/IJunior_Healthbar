@@ -1,14 +1,13 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
-    [SerializeField] private Healthbar _healthbar;
-    [SerializeField] private SmoothHealthbar _smoothHealthbar;
-    [SerializeField] private HealthIndicator _healthIndicator;
 
     private float _currentHealth;
 
+    public float MaxHealth => _maxHealth;
     public float CurrentHealth
     {
         get
@@ -19,18 +18,17 @@ public class Health : MonoBehaviour
         {
             _currentHealth = value;
 
-            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+            OnHealthChanged?.Invoke(_currentHealth);
         }
     }
 
-    public delegate void HealthChanged (float health, float maxHeatlh);
-    public event HealthChanged OnHealthChanged;
+    public event Action<float> OnHealthChanged;
 
     private void Start()
     {
         CurrentHealth = _maxHealth;
 
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        OnHealthChanged?.Invoke(_currentHealth);
     }
 
     public void Heal(float healAmount)

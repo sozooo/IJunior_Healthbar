@@ -1,18 +1,22 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-[RequireComponent(typeof(Slider))]
-public class Healthbar : MonoBehaviour
+public abstract class Healthbar : MonoBehaviour
 {
-    private Slider _slider;
+    [SerializeField] private Health _health;
 
-    private void Awake()
+    protected float _maxHealth;
+
+    private void OnEnable()
     {
-        _slider = GetComponent<Slider>();
+        _maxHealth = _health.MaxHealth;
+
+        _health.OnHealthChanged += Display;
     }
 
-    public void Display(float currentHealth, float maxHealth)
+    private void OnDisable()
     {
-        _slider.value = currentHealth / maxHealth;
+        _health.OnHealthChanged -= Display;
     }
+
+    protected abstract void Display(float _currentHealth);
 }

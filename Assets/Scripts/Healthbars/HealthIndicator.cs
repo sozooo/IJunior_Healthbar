@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class HealthIndicator : MonoBehaviour
+public class HealthIndicator : Healthbar
 {
     private TextMeshProUGUI textMeshPro;
 
@@ -13,8 +11,8 @@ public class HealthIndicator : MonoBehaviour
         textMeshPro = GetComponent<TextMeshProUGUI>();
     }
 
-    public void Display(float currentHealth, float maxHealth)
+    protected override void Display(float currentHealth)
     {
-        textMeshPro.SetText($"{currentHealth}/{maxHealth}");
+        textMeshPro.SetText(currentHealth.ToString());
     }
 }

@@ -3,24 +3,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Slider))]
-public class SmoothHealthbar : MonoBehaviour
+public class SmoothHealthbar : RoughHealthbar
 {
     [SerializeField] private float _changeTime;
 
-    private Slider _slider;
+    private Coroutine _coroutine;
 
-    private void Awake()
+    protected override void Display(float currentHealth)
     {
-        _slider = GetComponent<Slider>();
+        if(_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(SmoothDisplaing(currentHealth));
     }
 
-    public void Display(float currentHealth, float maxHealth)
-    {
-        StopCoroutine(nameof(SmoothDisplaing));
-        StartCoroutine(SmoothDisplaing(currentHealth, maxHealth));
-    }
-
-    private IEnumerator SmoothDisplaing(float currentHealth, float maxHealth)
+    private IEnumerator SmoothDisplaing(float currentHealth)
     {
         float startValue = _slider.value;
         float timeGone = 0f;
@@ -29,7 +26,7 @@ public class SmoothHealthbar : MonoBehaviour
         {
             timeGone += Time.deltaTime;
 
-            _slider.value = Mathf.Lerp(startValue, currentHealth / maxHealth, timeGone / _changeTime);
+            _slider.value = Mathf.Lerp(startValue, currentHealth / _maxHealth, timeGone / _changeTime);
             yield return null;
         }
     }
