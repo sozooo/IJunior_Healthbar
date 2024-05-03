@@ -18,5 +18,5 @@ public abstract class Healthbar : MonoBehaviour
         _health.OnHealthChanged -= Display;
     }
 
-    protected abstract void Display(float _currentHealth);
+    protected abstract void Display(float currentHealth);
 }
